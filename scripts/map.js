@@ -695,7 +695,7 @@ function hideTable() {
     createDocumentSettings(options);
 
     ///document.title = getSetting('_mapTitle');
-    document.title = 'Market Research';
+    document.title = 'Oman Salalah';
     addBaseMap();
 
     // Add point markers to the map
