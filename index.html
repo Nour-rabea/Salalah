@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="media/The LOGOO.png">
+
+  <title>launching the Database ..</title>
+
+  <!-- jQuery-->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+  <!-- Leaflet (CSS and JS) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+
+  <!-- PapaParse -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/js/fontawesome.min.js"></script>
+
+  <!-- leaflet-providers-->
+  <script src="https://unpkg.com/leaflet-providers@1.10.2/leaflet-providers.js"></script>
+  
+  <!-- Leaflet.awesome-markers v2.0.4, manually updated to svg to allow hex and material icons -->
+  <link rel="stylesheet" type="text/css" href="scripts/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
+  <script type="text/javascript" src="scripts/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+
+  <!-- Leaflet Markercluster -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+  <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+  <!-- Leaflet Markercluster layer support -->
+  <script src="https://unpkg.com/leaflet.markercluster.layersupport@2.0.1/dist/leaflet.markercluster.layersupport.js"></script>
+
+ <!-- Leaflet control geocoder -->
+ <link rel="stylesheet" href="leaflet-search-master\dist\leaflet-search.src.css" />
+ <script src="Search.js"></script>
+ <script src="leaflet-search-master\dist\leaflet-search.src.js"></script>
+
+ <!-- Leaflet Ruler-->
+ <link rel="stylesheet" href="leaflet-ruler-master\src\leaflet-ruler.css" />
+ <script src="leaflet-ruler-master\src\leaflet-ruler.js"></script> 
+
+  <!-- Locate Control -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.72.0/L.Control.Locate.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.72.0/L.Control.Locate.min.js"></script>
+
+  <!-- jQuery-CSV -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.11/jquery.csv.min.js"></script>
+
+  <!-- Custom style sheet -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <!-- DataTables -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+	<script language="javascript">
+//<!--hide
+//var password;
+//var pass1="";
+//password=prompt('You Have To Get Permission','');
+//if (password==pass1);
+//else {
+  //window.location="https://nour-rabea.github.io/Core/";
+//}
+//-->
+	</script>
+
+  <div class="loader">Loading...</div>
+  <div id="map"></div>
+<button id="container" class="btn">Prices Analysis</button>
+<table id="maptable" class="display"></table>
+	
+  <script type="text/javascript">
+    var map = L.map('map', {
+      attributionControl: false,
+      zoomControl: false,
+      scrollWheelZoom: true,
+      tap: false
+    }).setView([30.02,31.55], 11); // default center is overridden by Google Sheet options and points
+    var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 16
+    }).addTo(map);
+    var TopPlusOpen_Grey = L.tileLayer('http://sgx.geodatenzentrum.de/wmts_topplus_open/tile/1.0.0/web_grau/default/WEBMERCATOR/{z}/{y}/{x}.png', {
+      maxZoom: 18
+    });
+    
+//Leaflet layer control
+    var baseMaps = {
+      'Street Map': Esri_WorldGrayCanvas,
+      'Details Map': TopPlusOpen_Grey,
+    }
+    var overlayMaps = {
+  'Satellite': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+})
+    }
+///L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}?api_key=30c612bc-8fb1-4418-8b7b-354f885c920d', {
+///minZoom: 0,
+///maxZoom: 20,
+///ext: 'jpg'
+///}
+
+//Json data search
+const searchLayer = L.geoJSON(Search, {
+  onEachFeature: function(feature, layer) {
+    layer.bindPopup(feature.properties.Project);
+  }
+});
+
+//control search
+const searchControl = new L.Control.Search({
+  layer: searchLayer,
+  zoom: "13",
+  propertyName: 'Project'
+}).setPosition('topright');
+map.addControl(searchControl);
+map.removeLayer(searchLayer);
+
+    //ruler
+    var options = {
+        position: 'bottomright',
+        lengthUnit: {
+            display: 'km',
+            label: 'Distance:',
+            decimal: 2,
+        },
+    };
+    </script>
+	
+  <script type="text/javascript" src="./google-doc-url.js"></script>
+  <script type="text/javascript" src="./scripts/constants.js"></script>
+  <script type="text/javascript" src="./scripts/palette.js"></script>
+  <script type="text/javascript" src="./scripts/polylabel.js"></script>
+  <script type="text/javascript" src="./scripts/map.js"></script>
+
+</body>
+</html>
