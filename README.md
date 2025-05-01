@@ -1,5 +1,5 @@
 ## Live links
 ![Nour](media/LOGO.jpg)
 
-- Leaflet Map https://nour-rabea.github.io/Core/
-- Google Sheets template https://docs.google.com/spreadsheets/d/1YR4Nz3DS2nCVqrGD2b9BDBWzqgkFZYzTIs_o80DKhdo/edit#gid=0
+- Leaflet Map https://nour-rabea.github.io/Salalah/
+- Google Sheets template https://docs.google.com/spreadsheets/d/1AGNF7enmhbw0KH9QaNxyIFN2XZl83nradHy7_XQ5FvY/edit?gid=0#gid=0
