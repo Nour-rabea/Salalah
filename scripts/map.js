@@ -130,11 +130,11 @@ $(window).on('load', function() {
             .bindPopup("<b>" + point['Project'] + '</b><br>' +
             point['Developer'] + '</b><br>' +
             (point['Image'] ? ('<img src="' + point['Image'] + '"><br>') : '') +
-            "<b>Hotline/ </b>"+ point['Hotline'] + '</b><br>' +
+            "<b></b>"+ point['Hotline'] + '</b><br>' +
             (point['Website'] ? ('<b><a href="' + point['Website'] + '" target="_blank">Website</a></b><br>') : '') +
             point['Brochure'] + '</b><br>' +
-            "<b>Head Office/ </b>" + point['Head Offices'] + '</b><br>' +
-            point['Area'] + '</b> Acre <br>')
+            "<b></b>" + point['Head Offices'] + '</b><br>' +
+            point['Area'] + '</b><br>')
             .bindTooltip("<b>" + point['Project'] + '</b><br>' +
               point['Developer'], {permanent: false, direction: 'right'});
 
@@ -695,7 +695,7 @@ function hideTable() {
     createDocumentSettings(options);
 
     ///document.title = getSetting('_mapTitle');
-    document.title = 'Oman Salalah';
+    document.title = 'Salalah_Oman';
     addBaseMap();
 
     // Add point markers to the map
